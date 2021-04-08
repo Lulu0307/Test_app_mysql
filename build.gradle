@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.netology'
+version '1.0-SNAPSHOT'
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'com.codeborne:selenide:5.3.1'
+    testImplementation 'com.github.javafaker:javafaker:1.0.1'
+    implementation 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.18'
+    testImplementation 'mysql:mysql-connector-java:8.0.18'
+    testImplementation 'commons-dbutils:commons-dbutils:1.7'
+}
+
+test {
+    useJUnitPlatform()
+}
