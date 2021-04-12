@@ -1,9 +1,10 @@
-package ru.netology.Pages;
+package ru.netology.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import ru.netology.Data.UserData;
+import ru.netology.data.UserData;
 
+import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class LoginPage {
@@ -25,5 +26,9 @@ public class LoginPage {
         loginField.setValue(UserData.incorrectAuthInfo().getLogin());
         passwordField.setValue(UserData.incorrectAuthInfo().getPassword());
         loginButton.click();
+    }
+
+    public void showErrorMessage(){
+        $(withText("Неверно указан логин или пароль")).shouldBe(Condition.visible);
     }
 }

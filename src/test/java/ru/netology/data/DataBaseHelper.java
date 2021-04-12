@@ -1,11 +1,9 @@
-package ru.netology;
+package ru.netology.data;
 
 import lombok.val;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import ru.netology.Data.UserData;
-import ru.netology.Data.VerificationInfo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +24,7 @@ public class DataBaseHelper {
     }
 
 
-    public static void cleanDatabase() throws SQLException {
+    public static void cleanDatabase()  {
         val cleanUsersTable = "DELETE FROM users;";
         val cleanAuthTable = "DELETE FROM auth_codes;";
         val cleanTransactionsTable = "DELETE FROM card_transactions;";
@@ -37,17 +35,21 @@ public class DataBaseHelper {
             runner.execute(conn, cleanCardsTable);
             runner.execute(conn, cleanAuthTable);
             runner.execute(conn, cleanUsersTable);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
 
-    public static String findCode() throws SQLException {
+    public static String findCode()  {
         val request = "SELECT * FROM auth_codes WHERE created = (SELECT MAX(created) FROM auth_codes);";
         val runner = new QueryRunner();
-        VerificationInfo data;
+        VerificationInfo data = null;
         ResultSetHandler<VerificationInfo> bh = new BeanHandler<>(VerificationInfo.class);
         try (val conn = getConnect()) {
             data = runner.query(conn, request, bh);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return data.getCode();
     }

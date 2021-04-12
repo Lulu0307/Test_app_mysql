@@ -1,4 +1,4 @@
-package ru.netology.Pages;
+package ru.netology.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -14,8 +14,12 @@ public class VerificationPage {
         codeField.shouldBe(Condition.visible);
     }
 
-    public static void showErrorMessage() {
+    public static void errorMessageWhenIncorrectPasscode() {
         $(withText("Неверно указан код")).shouldBe(Condition.visible);
+    }
+
+    public void showErrorMessage(){
+        $(withText("Превышено количество попыток входа")).shouldBe(Condition.visible);
     }
 
     public DashboardPage validVerify(String code) {
@@ -28,7 +32,7 @@ public class VerificationPage {
         for (int i = 0; i <=3; i++) {
             codeField.setValue(String.valueOf(i));
             button.click();
-            showErrorMessage();
+            errorMessageWhenIncorrectPasscode();
         }
         button.click();
     }
